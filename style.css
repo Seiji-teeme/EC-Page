@@ -54,8 +54,8 @@ h1 em, h2 em { color: var(--orange-dark); font-family: 'Playfair Display', serif
 .orbit-one { height: 460px; left: -40px; top: 40px; width: 610px; }
 .orbit-two { height: 210px; left: 195px; top: 130px; width: 350px; }
 .game-card { box-shadow: 14px 18px 0 rgba(31, 36, 33, .12); height: 300px; position: absolute; transform: rotate(-9deg); width: 210px; }
-.card-back { background: #36c3cc; left: 22%; top: 23%; }
-.card-back span { border: 1px solid rgba(255,255,255,.55); border-radius: 50%; color: var(--cream); display: block; font: 38px var(--mono); left: 50%; padding: 29px 12px; position: absolute; top: 50%; transform: translate(-50%, -50%); }
+.card-back { background: #174bbe; left: 22%; top: 23%; }
+.card-logo { height: 104px; left: 50%; object-fit: contain; position: absolute; top: 50%; transform: translate(-50%, -50%); width: 104px; }
 .card-front { background: var(--cream); display: flex; flex-direction: column; justify-content: space-between; left: 39%; padding: 22px; top: 18%; transform: rotate(9deg); }
 .card-front small, .card-number { color: var(--orange-dark); font: 10px var(--mono); text-transform: uppercase; }
 .card-front strong { font: 600 22px/1.05 'Playfair Display', serif; }
@@ -69,10 +69,13 @@ h1 em, h2 em { color: var(--orange-dark); font-family: 'Playfair Display', serif
 .manifesto-grid > p:last-child { color: #c6cbc4; font-size: 14px; line-height: 1.7; max-width: 280px; }
 .story { align-items: center; display: grid; gap: 11%; grid-template-columns: 1fr 1fr; padding-bottom: 150px; padding-top: 150px; }
 .story-image { align-items: flex-end; background: linear-gradient(135deg, #2768f8 0%, #4b9366 100%); display: flex; height: 520px; justify-content: flex-end; overflow: hidden; padding: 25px; position: relative; }
+.story-image.team-image { align-items: center; aspect-ratio: 16 / 9; background: #e8eef2; border: 1px dashed rgba(31,36,33,.35); height: auto; justify-content: center; padding: 0; }
 .story-image::before, .story-image::after { border: 1px solid rgba(251,250,246,.55); border-radius: 50%; content: ''; height: 500px; position: absolute; width: 500px; }
 .story-image::before { left: -230px; top: -110px; }
 .story-image::after { bottom: -220px; right: -160px; }
 .story-image span { color: var(--cream); font: 10px/1.35 var(--mono); letter-spacing: .08em; position: relative; z-index: 1; }
+.story-image.team-image::before, .story-image.team-image::after { display: none; }
+.story-image.team-image img { display: block; height: 100%; object-fit: contain; width: 100%; }
 .story-copy { max-width: 440px; }
 h2 { font-size: clamp(2.4rem, 4.7vw, 4.3rem); letter-spacing: -.06em; line-height: .98; margin-bottom: 25px; }
 .story-copy > p:not(.section-label) { color: #5a625b; font-size: 15px; line-height: 1.75; }
@@ -115,6 +118,7 @@ footer h2 { font-size: clamp(2.7rem, 5vw, 5.1rem); margin-bottom: 40px; }
 .footer-column { display: flex; flex-direction: column; gap: 14px; padding-top: 4px; }
 .footer-column p { color: #6b2b1b; font: 10px var(--mono); letter-spacing: .08em; text-transform: uppercase; }
 .footer-column a { font-weight: 500; }
+.social-link { align-items: center; display: inline-flex; gap: 8px; }
 .footer-bottom { border-top: 1px solid rgba(251,250,246,.4); color: #712d1c; display: flex; font: 10px var(--mono); justify-content: space-between; margin-top: 90px; padding-top: 17px; }
 .footer-bottom a:hover { color: var(--cream); }
 .search-hit { animation: highlight 1.2s ease; }
@@ -123,9 +127,11 @@ footer h2 { font-size: clamp(2.7rem, 5vw, 5.1rem); margin-bottom: 40px; }
 .page-kicker { color: var(--orange-dark); font: 500 10px var(--mono); justify-self: center; letter-spacing: .08em; }
 .inner-hero { padding-bottom: 125px; padding-top: 120px; }
 .inner-hero h1 { max-width: 850px; }
-.about-block { border-top: 1px solid var(--line); display: grid; gap: 12%; grid-template-columns: 1fr 1fr; padding-bottom: 130px; padding-top: 100px; }
+.about-block { border-top: 1px solid var(--line); display: grid; gap: 15%; grid-template-columns: 1fr 1fr; padding-bottom: 130px; padding-top: 100px; }
 .about-block h2 { max-width: 480px; }
 .about-block > div:last-child { color: #5a625b; font-size: 15px; line-height: 1.75; max-width: 480px; }
+.team-photo-slot { aspect-ratio: 16 / 9; grid-column: 1 / -1; margin: 0 auto 35px; max-width: 920px; overflow: hidden; width: 100%; }
+.team-photo-slot img { display: block; height: 100%; object-fit: contain; width: 100%; }
 .values-block { background: var(--ink); color: var(--cream); padding: 100px 0 120px; }
 .values-block .section-label { color: #55e2b9; }
 .values-grid { display: grid; gap: 1px; grid-template-columns: repeat(4, 1fr); margin-top: 65px; }
@@ -137,7 +143,7 @@ footer h2 { font-size: clamp(2.7rem, 5vw, 5.1rem); margin-bottom: 40px; }
 .about-quote { align-items: center; display: flex; justify-content: space-between; padding-bottom: 120px; padding-top: 120px; }
 .about-quote p { font: italic 600 clamp(2rem, 4vw, 4rem)/1.05 'Playfair Display', serif; max-width: 680px; }
 .about-quote .button { margin: 0; }
-.game-hero { align-items: center; display: grid; gap: 10%; grid-template-columns: 1fr 1fr; min-height: 670px; padding-bottom: 80px; padding-top: 80px; }
+.game-hero { align-items: center; display: grid; gap: 7%; grid-template-columns: .95fr 1.05fr; min-height: 670px; padding-bottom: 80px; padding-top: 80px; }
 .game-hero-copy h1 { font-size: clamp(4rem, 7vw, 7rem); }
 .game-title-images { display: flex; flex-direction: column; gap: 1px; margin: 24px 0 30px; max-width: 560px; width: 100%; }
 .game-title-images img { display: block; height: auto; max-height: 145px; object-fit: contain; object-position: left center; width: 100%; }
@@ -151,6 +157,10 @@ footer h2 { font-size: clamp(2.7rem, 5vw, 5.1rem); margin-bottom: 40px; }
 .game-cover img { height: 100%; inset: 0; object-fit: cover; position: absolute; width: 100%; }
 .game-cover::before, .game-cover::after { border: 1px solid rgba(31,36,33,.35); border-radius: 50%; content: ''; height: 470px; position: absolute; width: 470px; }
 .game-cover::before { left: -245px; top: -130px; }.game-cover::after { bottom: -250px; right: -150px; }
+.game-cover.instagram-cover { aspect-ratio: 8 / 9; background: transparent; box-shadow: none; height: auto; min-width: 0; overflow: hidden; width: min(100%, 480px); }
+.instagram-cover::before, .instagram-cover::after { display: none; }
+.instagram-cover blockquote { margin: 0 auto !important; max-width: 540px !important; min-width: min(326px, 100%) !important; width: 100% !important; }
+.instagram-cover iframe { display: block; max-width: none !important; width: 100% !important; }
 .cover-cross { font-size: 60px; line-height: 1; position: relative; z-index: 1; }.cover-title { font: 500 14px var(--mono); letter-spacing: .13em; margin-top: 30px; position: relative; z-index: 1; }.cover-title strong { font-size: 28px; }.cover-subtitle { font: italic 600 16px 'Playfair Display', serif; margin-top: 22px; position: relative; z-index: 1; }.cover-sticker { bottom: 25px; font: 10px var(--mono); left: 25px; position: absolute; text-align: left; }
 .game-intro-band { background: var(--orange); color: var(--cream); padding: 110px 0; }.game-intro-grid { align-items: center; display: grid; gap: 8%; grid-template-columns: 1.3fr .7fr; }.game-intro-band .section-label { color: #bfe8ff; }.game-intro-band h2 { margin: 0; }.mission-copy { color: #e7f1ff; font-size: 14px; line-height: 1.7; margin: 30px 0 0; max-width: 500px; }
 .character-card { background: #080b10; border: 2px solid rgba(0,0,0,.8); justify-self: end; margin-right: calc((min(1180px, calc(100vw - 64px)) - 100vw) / 2); max-width: 320px; padding: 18px; width: 100%; }.character-image-frame { align-items: center; aspect-ratio: 3 / 4; border: 1px solid rgba(255,255,255,.12); display: flex; justify-content: center; overflow: hidden; }.character-image-frame img { height: 100%; object-fit: contain; width: 100%; }.character-name { border-top: 1px solid rgba(255,255,255,.12); color: var(--cream); font-size: 12px; letter-spacing: .12em; margin-top: 16px; padding-top: 16px; text-align: center; }
@@ -202,7 +212,8 @@ footer h2 { font-size: clamp(2.7rem, 5vw, 5.1rem); margin-bottom: 40px; }
 	.page-kicker { display: none; }
 	.inner-hero { padding-bottom: 80px; padding-top: 75px; }
 	.about-block, .how-to { display: block; padding-bottom: 85px; padding-top: 75px; }
-	.about-block > div:last-child { margin-top: 45px; }
+	.about-block > div:last-child { margin-top: 55px; }
+	.team-photo-slot { margin: 0 auto 45px; }
 	.values-block { padding: 75px 0; }
 	.values-grid, .feature-grid, .support-grid { display: block; margin-top: 45px; }
 	.values-grid article, .values-grid article + article, .feature-grid article, .feature-grid article + article, .support-grid article, .support-grid article + article { border-left: 0; padding: 22px 0; }
