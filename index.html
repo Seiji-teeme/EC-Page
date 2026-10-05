@@ -16,8 +16,9 @@
         </a>
         <form class="search" role="search">
             <label class="sr-only" for="site-search">Buscar en el sitio</label>
-            <input id="site-search" type="search" placeholder="Buscar en EC" autocomplete="off">
+            <input id="site-search" type="search" placeholder="Buscar en EC" autocomplete="off" aria-controls="search-results">
             <button type="submit" aria-label="Buscar">↗</button>
+            <div class="search-results" id="search-results" role="status" aria-live="polite" hidden></div>
         </form>
         <nav class="main-nav" aria-label="Navegación principal">
             <a href="Soporte.html">Ayuda</a>
@@ -26,7 +27,7 @@
     </header>
 
     <main id="inicio">
-        <section class="hero section-wrap" aria-labelledby="hero-title">
+        <section class="hero section-wrap" id="portada" aria-labelledby="hero-title">
             <div class="hero-copy">
                 <p class="eyebrow">Microemprendimiento educativo · Desarrollo de videojuegos</p>
                 <h1 id="hero-title">El siguiente nivel del <em>aprendizaje.</em></h1>
@@ -42,7 +43,7 @@
             </div>
         </section>
 
-        <section class="manifesto" aria-label="Manifiesto de EC">
+        <section class="manifesto" id="idea" aria-label="Manifiesto de EC">
             <div class="section-wrap manifesto-grid">
                 <p class="section-label">01 / La idea</p>
                 <h2>La educación puede ser el comienzo de una gran aventura.</h2>
@@ -51,7 +52,6 @@
         </section>
 
         <section class="story section-wrap" id="nosotros" aria-labelledby="story-title">
-            <div class="story-image team-image"><img src="images/Organigrama3.png" alt="Los cuatro integrantes de EC Entertainment"></div>
             <div class="story-copy">
                 <p class="section-label">02 / Nosotros</p>
                 <h2 id="story-title">Un microemprendimiento educativo con propósito.</h2>
@@ -82,13 +82,13 @@
 
         <section class="help section-wrap" id="ayuda" aria-labelledby="help-title">
             <div><p class="section-label">04 / Estamos para ayudarte</p><h2 id="help-title">¿Algo no salió como esperabas?</h2></div>
-            <div class="help-links"><a href="Soporte.html"><span>01</span> Soporte y consultas <b>↗</b></a><a href="Soporte.html#sugerencias"><span>02</span> Sugerencias para mejorar <b>↗</b></a><a href="Cmaravillosa.html#como-jugar"><span>03</span> Cómo jugar a Clínica Maravillosa <b>↗</b></a></div>
+            <div class="help-links"><a href="https://www.instagram.com/ec_entertainment.ok/" target="_blank" rel="noopener noreferrer"><span>01</span> Soporte y consultas <b>↗</b></a><a href="https://www.instagram.com/ec_entertainment.ok/" target="_blank" rel="noopener noreferrer"><span>02</span> Sugerencias para mejorar <b>↗</b></a><a href="Cmaravillosa.html#como-jugar"><span>03</span> Cómo jugar a Clínica Maravillosa <b>↗</b></a></div>
         </section>
     </main>
 
     <footer id="contacto">
         <div class="section-wrap footer-main">
-            <div><p class="section-label">Hablemos</p><h2>El próximo nivel<br>empieza acá.</h2><a class="mail-link" href="mailto:hola@ec-entertainment.com">hola@ec-entertainment.com ↗</a></div>
+            <div><p class="section-label">Hablemos</p><h2>El próximo nivel<br>empieza acá.</h2></div>
             <div class="footer-column"><p>Seguinos</p><a class="social-link" href="https://www.instagram.com/ec_entertainment.ok/" target="_blank" rel="noopener noreferrer"><img src="images/Insta.png" alt="" width="24" height="24"><span>Instagram</span></a></div>
             <div class="footer-column"><p>Explorá</p><a href="aboutus.html">Nosotros</a><a href="Cmaravillosa.html">El juego</a><a href="Soporte.html">Ayuda</a></div>
         </div>
@@ -98,18 +98,85 @@
     <script>
         const searchForm = document.querySelector('.search');
         const searchInput = document.querySelector('#site-search');
+        const searchResults = document.querySelector('#search-results');
         const searchableSections = [...document.querySelectorAll('main section')];
 
+        const normalizeText = (text) => text
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '')
+            .toLowerCase();
+
+        const findMatches = () => {
+            const query = normalizeText(searchInput.value.trim());
+            if (!query) return [];
+
+            const terms = query.split(/\s+/);
+            return searchableSections
+                .map((section) => ({
+                    section,
+                    text: normalizeText(section.textContent)
+                }))
+                .filter(({ text }) => terms.every((term) => text.includes(term)))
+                .sort((a, b) => Number(b.text.includes(query)) - Number(a.text.includes(query)));
+        };
+
+        const showResults = () => {
+            const query = searchInput.value.trim();
+            if (!query) {
+                searchResults.hidden = true;
+                searchResults.replaceChildren();
+                return [];
+            }
+
+            const matches = findMatches();
+            const message = document.createElement('p');
+            message.className = 'search-results-message';
+            message.textContent = matches.length
+                ? `${matches.length} ${matches.length === 1 ? 'resultado' : 'resultados'} para “${query}”`
+                : `No encontramos resultados para “${query}”.`;
+
+            searchResults.replaceChildren(message);
+            if (matches.length) {
+                const list = document.createElement('ul');
+                matches.forEach(({ section }) => {
+                    const heading = section.querySelector('h1, h2');
+                    const label = heading?.textContent.trim() || section.querySelector('.section-label')?.textContent.trim() || 'Sección';
+                    const item = document.createElement('li');
+                    const link = document.createElement('a');
+                    link.href = `#${section.id}`;
+                    link.textContent = label;
+                    item.append(link);
+                    list.append(item);
+                });
+                searchResults.append(list);
+            }
+
+            searchResults.hidden = false;
+            return matches;
+        };
+
+        searchInput.addEventListener('input', showResults);
         searchForm.addEventListener('submit', (event) => {
             event.preventDefault();
-            const query = searchInput.value.trim().toLowerCase();
-            const match = searchableSections.find((section) => section.textContent.toLowerCase().includes(query));
-            if (query && match) {
-                match.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                match.classList.add('search-hit');
-                window.setTimeout(() => match.classList.remove('search-hit'), 1200);
+            const [match] = showResults();
+            if (match) {
+                match.section.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                match.section.classList.remove('search-hit');
+                void match.section.offsetWidth;
+                match.section.classList.add('search-hit');
+                window.setTimeout(() => match.section.classList.remove('search-hit'), 1200);
             }
         });
+
+        searchResults.addEventListener('click', (event) => {
+            const link = event.target.closest('a');
+            if (!link) return;
+            const section = document.querySelector(link.getAttribute('href'));
+            section?.classList.add('search-hit');
+            window.setTimeout(() => section?.classList.remove('search-hit'), 1200);
+            searchResults.hidden = true;
+        });
     </script>
+    <script src="animations.js"></script>
 </body>
 </html>
