@@ -1,5 +1,81 @@
 (() => {
 	const prefersReducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+	const menu = document.querySelector('#site-menu');
+	const menuTrigger = document.querySelector('[data-menu-open]');
+	const menuBackdrop = document.querySelector('.site-menu-backdrop');
+
+	if (menu && menuTrigger && menuBackdrop) {
+		let closeTimer;
+		const pageRegions = document.querySelectorAll('body > header, body > main, body > footer');
+
+		const closeMenu = () => {
+			if (menu.hidden) return;
+			menu.classList.remove('is-open');
+			menuBackdrop.classList.remove('is-open');
+			menuTrigger.setAttribute('aria-expanded', 'false');
+			document.body.classList.remove('menu-open');
+			pageRegions.forEach((region) => { region.inert = false; });
+			menuTrigger.focus();
+			window.clearTimeout(closeTimer);
+			closeTimer = window.setTimeout(() => {
+				menu.hidden = true;
+				menuBackdrop.hidden = true;
+			}, prefersReducedMotion ? 0 : 280);
+		};
+
+		menuTrigger.addEventListener('click', () => {
+			window.clearTimeout(closeTimer);
+			menu.hidden = false;
+			menuBackdrop.hidden = false;
+			document.body.classList.add('menu-open');
+			pageRegions.forEach((region) => { region.inert = true; });
+			menuTrigger.setAttribute('aria-expanded', 'true');
+			window.requestAnimationFrame(() => {
+				menu.classList.add('is-open');
+				menuBackdrop.classList.add('is-open');
+				menu.querySelector('.site-menu-close').focus();
+			});
+		});
+
+		menu.querySelectorAll('[data-menu-close]').forEach((button) => button.addEventListener('click', closeMenu));
+		menuBackdrop.addEventListener('click', closeMenu);
+		menu.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape') {
+				closeMenu();
+				return;
+			}
+			if (event.key !== 'Tab') return;
+
+			const focusableElements = [...menu.querySelectorAll('button:not([disabled]), a[href]')];
+			const firstElement = focusableElements[0];
+			const lastElement = focusableElements[focusableElements.length - 1];
+			if (event.shiftKey && document.activeElement === firstElement) {
+				event.preventDefault();
+				lastElement.focus();
+			} else if (!event.shiftKey && document.activeElement === lastElement) {
+				event.preventDefault();
+				firstElement.focus();
+			}
+		});
+	}
+
+	const feedbackForm = document.querySelector('[data-feedback-form]');
+	const feedbackSuccess = document.querySelector('[data-feedback-success]');
+	if (feedbackForm && feedbackSuccess) {
+		const closeButton = feedbackSuccess.querySelector('[data-feedback-close]');
+		closeButton.addEventListener('click', () => feedbackSuccess.close());
+
+		const showFeedbackSuccess = () => {
+				feedbackForm.reset();
+				feedbackSuccess.showModal();
+		};
+
+		feedbackForm.addEventListener('submit', (event) => {
+				event.preventDefault();
+				showFeedbackSuccess();
+		});
+	}
+
 	const characterCarousel = document.querySelector('[data-character-carousel]');
 	if (characterCarousel) {
 		const characterImage = characterCarousel.querySelector('.character-image-frame img');
@@ -27,6 +103,16 @@
 				name: 'Dalia',
 				image: 'images/dalia.png',
 				alt: 'Dalia, personaje de Clínica Maravillosa'
+			},
+			{
+				name: 'Maite',
+				image: 'images/maite.png',
+				alt: 'Maite, personaje de Clínica Maravillosa'
+			},
+			{
+				name: 'Fer',
+				image: 'images/fer.png',
+				alt: 'Fer, personaje de Clínica Maravillosa'
 			}
 		];
 		let activeCharacter = 0;
@@ -47,6 +133,8 @@
 				if (prefersReducedMotion || !Element.prototype.animate) {
 					characterImage.src = character.image;
 					characterImage.alt = character.alt;
+					characterImage.classList.toggle('is-maite', character.name === 'Maite');
+					characterImage.classList.toggle('is-fer', character.name === 'Fer');
 					characterName.textContent = character.name;
 					activeCharacter = nextIndex;
 					characterPosition.textContent = `${activeCharacter + 1} / ${characters.length}`;
@@ -63,6 +151,8 @@
 
 				characterImage.src = character.image;
 				characterImage.alt = character.alt;
+				characterImage.classList.toggle('is-maite', character.name === 'Maite');
+				characterImage.classList.toggle('is-fer', character.name === 'Fer');
 				characterName.textContent = character.name;
 				activeCharacter = nextIndex;
 				characterPosition.textContent = `${activeCharacter + 1} / ${characters.length}`;

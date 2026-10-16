@@ -10,10 +10,16 @@
 </head>
 <body class="game-page coming-soon-page">
 	<header class="site-header">
-		<a class="brand" href="index.html" aria-label="EC, volver al inicio"><span class="brand-mark">EC</span><span class="brand-name">EC Entertainment</span></a>
+		<button class="brand" type="button" aria-label="Abrir menú de navegación" aria-controls="site-menu" aria-expanded="false" data-menu-open><span class="brand-mark">EC</span><span class="brand-name">EC Entertainment</span></button>
 		<div class="page-kicker">EC / VIDEOJUEGO EDUCATIVO</div>
 		<nav class="main-nav" aria-label="Navegación principal"><a href="Soporte.html">Ayuda</a><a href="aboutus.html">Nosotros</a></nav>
 	</header>
+	<button class="site-menu-backdrop" type="button" data-menu-close aria-label="Cerrar menú" hidden></button>
+	<aside class="site-menu" id="site-menu" role="dialog" aria-modal="true" aria-labelledby="site-menu-title" hidden>
+		<div class="site-menu-heading"><div><p class="section-label">EC / NAVEGACIÓN</p><h2 id="site-menu-title">Explorá EC</h2></div><button class="site-menu-close" type="button" data-menu-close aria-label="Cerrar menú">×</button></div>
+		<nav class="site-menu-nav" aria-label="Menú principal"><a href="index.html">Inicio <span>01</span></a><a href="Cmaravillosa.html">El juego <span>02</span></a><a href="aboutus.html">Nosotros <span>03</span></a><a href="Soporte.html">Ayuda <span>04</span></a></nav>
+		<p class="site-menu-note">EC Entertainment · Aprender jugando.</p>
+	</aside>
 
 	<main class="coming-soon-main">
 		<section class="coming-soon-card" aria-labelledby="coming-soon-title">
