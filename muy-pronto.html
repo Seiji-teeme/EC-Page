@@ -5,10 +5,18 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<link rel="stylesheet" href="style.css">
 	<link rel="icon" type="image/png" href="images/eentertainment%20(1).png">
-	<meta name="description" content="Clínica Maravillosa estará disponible muy pronto.">
-	<title>Muy pronto | Clínica Maravillosa</title>
+	<meta name="description" content="Descargá Clínica Maravillosa para Windows, el videojuego educativo de EC Entertainment.">
+	<title>Descargar | Clínica Maravillosa</title>
+	<style>
+		/* Estilos mínimos para los bloques nuevos; si preferís, pasalos a style.css */
+		.download-meta { margin: 0.75rem 0 0; font-size: 0.9rem; opacity: 0.75; }
+		.download-steps { list-style: none; margin: 1.75rem auto 0; padding: 0; max-width: 34rem; display: grid; gap: 0.6rem; text-align: left; counter-reset: paso; }
+		.download-steps li { counter-increment: paso; display: flex; gap: 0.75rem; align-items: baseline; padding: 0.75rem 1rem; border: 1px solid color-mix(in srgb, currentColor 22%, transparent); border-radius: 0.5rem; }
+		.download-steps li::before { content: counter(paso, decimal-leading-zero); font-weight: 700; opacity: 0.7; }
+		.download-note { margin: 1.25rem auto 0; max-width: 34rem; font-size: 0.9rem; opacity: 0.8; line-height: 1.5; }
+	</style>
 </head>
-<body class="game-page coming-soon-page">
+<body class="game-page coming-soon-page download-page">
 	<header class="site-header">
 		<button class="brand" type="button" aria-label="Abrir menú de navegación" aria-controls="site-menu" aria-expanded="false" data-menu-open><span class="brand-mark">EC</span><span class="brand-name">EC Entertainment</span></button>
 		<div class="page-kicker">EC / VIDEOJUEGO EDUCATIVO</div>
@@ -23,11 +31,22 @@
 
 	<main class="coming-soon-main">
 		<section class="coming-soon-card" aria-labelledby="coming-soon-title">
-			<p class="coming-soon-label">PRÓXIMAMENTE · VIDEOJUEGO EDUCATIVO</p>
+			<p class="coming-soon-label">DISPONIBLE · VIDEOJUEGO EDUCATIVO</p>
 			<img class="coming-soon-art" src="images/ClinicaMaravillosa.jpeg" alt="Clínica Maravillosa, el siguiente nivel del aprendizaje">
-			<p class="coming-soon-eyebrow">PREPARÁTE PARA LA AVENTURA</p>
-			<h1 id="coming-soon-title">Clínica Maravillosa<br><em>muy pronto.</em></h1>
-			<p class="coming-soon-copy">Estamos preparando todo para que muy pronto puedas jugar y aprender con nosotros.</p>
+			<p class="coming-soon-eyebrow">YA PODÉS JUGAR</p>
+			<h1 id="coming-soon-title">Clínica Maravillosa<br><em>ya está acá.</em></h1>
+			<p class="coming-soon-copy">Descargá el instalador, abrilo y empezá la aventura: jugá y aprendé con nosotros.</p>
+			<a class="button button-game" href="https://github.com/Seiji-teeme/EC-Page/releases/latest/download/Instalador_ClinicaMaravillosa.exe">Descargar para Windows <span>↓</span></a>
+			<p class="download-meta">Versión 1.0 · EC Entertainment</p>
+
+			<ol class="download-steps" aria-label="Cómo instalar">
+				<li>Descargá el instalador con el botón de arriba.</li>
+				<li>Abrilo y seguí los pasos (te va a pedir permisos de administrador).</li>
+				<li>Jugá desde el acceso directo “Clínica maravillosa” que queda en tu escritorio.</li>
+			</ol>
+
+			<p class="download-note">Si Windows muestra el aviso “Windows protegió su PC”, es porque el instalador todavía no está firmado digitalmente. Tocá <strong>Más información</strong> y después <strong>Ejecutar de todas formas</strong>. ¿Algún problema? Escribinos desde <a href="Soporte.html">Ayuda</a>.</p>
+
 			<a class="button button-game" href="Cmaravillosa.html">Volver a Clínica Maravillosa <span>↗</span></a>
 		</section>
 	</main>
